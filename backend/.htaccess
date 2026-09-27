@@ -1,0 +1,30 @@
+# EduAI PHP backend - Apache configuration
+
+# Do not expose folder listings.
+Options -Indexes
+
+# Disable MultiViews so Apache does not guess file names.
+Options -MultiViews
+
+# Prevent access to application secrets and database files.
+<FilesMatch "^(?:\.env|\.git|composer\.(?:json|lock)|schema\.sql|.*\.ini|.*\.log)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block direct access to the database configuration directory.
+    RewriteRule ^config(?:/|$) - [F,L]
+
+    # Keep existing files and directories, including /api/*.php, unchanged.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # The frontend calls /courses.php, /auth.php, etc. from the backend root.
+    # Route those requests to the implementation in /api without redirecting.
+    RewriteRule ^([A-Za-z0-9_-]+)\.php$ api/$1.php [END,QSA]
+</IfModule>
+
+# PHP sets the actual CORS headers in api.php. Do not add wildcard CORS here.
