@@ -6,8 +6,8 @@
 define('DB_HOST', 'localhost');
 define('DB_PORT', 3306);
 define('DB_NAME', 'eduai_lms');
-define('DB_USER', 'root');        // Change to your MySQL username
-define('DB_PASS', 'password');            // Change to your MySQL password
+define('DB_USER', getenv('EDUAI_DB_USER') ?: 'CHANGE_ME');
+define('DB_PASS', getenv('EDUAI_DB_PASS') ?: 'CHANGE_ME');
 define('DB_CHARSET', 'utf8mb4');
 
 define('DEFAULT_USER_ID', 1);    // Single-user mode default
