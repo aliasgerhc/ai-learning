@@ -14,13 +14,14 @@ export default function DocumentUpload({ onTextLoaded, label = 'Upload document'
     setFileName(file.name);
     setError('');
 
-    if (!/\.(txt|md|csv)$/i.test(file.name)) {
-      setError('Use a TXT, MD, or CSV file here. Use PDF Chat for PDF documents.');
+    const isReadableText = /\.(txt|md|csv|json|html|xml|js|jsx|ts|tsx|css|sql)$/i.test(file.name);
+    if (!isReadableText) {
+      onTextLoaded('', file.name, file);
       return;
     }
 
     const reader = new FileReader();
-    reader.onload = () => onTextLoaded(String(reader.result || ''), file.name);
+    reader.onload = () => onTextLoaded(String(reader.result || ''), file.name, file);
     reader.onerror = () => setError('Could not read this document.');
     reader.readAsText(file);
   };
@@ -30,7 +31,7 @@ export default function DocumentUpload({ onTextLoaded, label = 'Upload document'
       <button className="btn btn-outline btn-sm" type="button" onClick={() => inputRef.current?.click()}>
         <FileUp size={15} /> {fileName || label}
       </button>
-      <input ref={inputRef} type="file" accept=".txt,.md,.csv" hidden onChange={handleChange} />
+      <input ref={inputRef} type="file" accept="*/*" hidden onChange={handleChange} />
       {fileName && !error && <span className="document-upload-name"><FileText size={13} /> {fileName}</span>}
       {error && <span className="document-upload-error">{error}</span>}
     </div>

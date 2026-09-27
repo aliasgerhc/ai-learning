@@ -230,10 +230,10 @@ The "answer" field must be the index (0-3) of the correct option in "options". G
           <div className="section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}><BrainCircuit size={24} className="text-primary" /> Quiz Generator</div>
           <div className="section-sub">AI-generated quizzes tailored to your topic</div>
         </div>
+        <DocumentUpload label="Add study document" onTextLoaded={(text, fileName) => setDocumentContext(text || `Uploaded study file: ${fileName}`)} />
       </div>
 
       <div className="card">
-        <DocumentUpload label="Add study document" onTextLoaded={(text) => setDocumentContext(text)} />
         {error && (
           <div style={{ marginBottom: 16, padding: '12px 16px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 'var(--radius-sm)', color: '#f87171', fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
             <AlertCircle size={16} /> {error}

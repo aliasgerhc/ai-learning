@@ -324,6 +324,7 @@ body {
 
 .mobile-logout-btn { color: #f87171; }
 .document-upload { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.section-header > .document-upload { margin-top: 0; flex-shrink: 0; }
 .document-upload-name, .document-upload-error { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
 .document-upload-error { color: #f87171; }
 

@@ -92,12 +92,12 @@ AI:`;
       <div className="section-header" style={{ marginBottom: 20 }}>
         <div>
           <div className="section-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}><FileText size={24} className="text-primary" /> Chat with Document</div>
-          <div className="section-sub">Upload a PDF or text file and ask questions about it</div>
+          <div className="section-sub">Upload a PDF, document, presentation, image, or text file and ask questions about it</div>
         </div>
         <button className="btn btn-primary btn-sm" onClick={() => fileRef.current?.click()} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <Upload size={16} /> Upload New
         </button>
-        <input ref={fileRef} type="file" accept=".pdf,.txt,.md,.csv" style={{ display: 'none' }} onChange={handleFileUpload} />
+        <input ref={fileRef} type="file" accept="*/*" style={{ display: 'none' }} onChange={handleFileUpload} />
       </div>
 
       {!file ? (
@@ -105,7 +105,7 @@ AI:`;
           <div className="upload-zone" style={{ padding: 40 }} onClick={() => fileRef.current?.click()}>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}><FileText size={48} color="var(--text-muted)" /></div>
             <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>Upload a document to chat</div>
-            <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Supports PDF, TXT, MD files</div>
+            <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Supports PDF, DOCX, PPTX, images, and text files</div>
           </div>
         </div>
       ) : (
