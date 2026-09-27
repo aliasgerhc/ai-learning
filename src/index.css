@@ -951,6 +951,8 @@ body {
 @media (max-width: 768px) {
   :root { --sidebar-width: 260px; }
 
+  .layout { display: block; }
+
   .sidebar {
     transform: translateX(-100%);
   }
