@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiKey, setApiKey, getModelName, getAvailableModels } from '../utils/ai';
+import { setApiKey, getModelName, getAvailableModels } from '../utils/ai';
 import { Key, X, Check, Save, Info } from 'lucide-react';
 
 export default function ApiKeyModal({ onClose }) {

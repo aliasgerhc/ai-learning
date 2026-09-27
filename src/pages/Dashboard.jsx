@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDashboardStats, getQuizResults, getSummaries } from '../utils/storage';
-import { Bot, FileText, BrainCircuit, PenTool, Calendar, BookOpen, Brain, Star, Trophy, Rocket } from 'lucide-react';
+import { Bot, FileText, BrainCircuit, PenTool, Calendar, BookOpen, Brain, Star, Trophy, Rocket, Hand, Lightbulb, Pin, Clock, Zap } from 'lucide-react';
 
 const QUICK_ACTIONS = [
   { icon: <Bot size={22} color="white" />, label: 'Ask AI Tutor', sub: 'Get instant answers', path: '/tutor', gradient: 'var(--gradient-primary)' },
@@ -13,11 +13,11 @@ const QUICK_ACTIONS = [
 ];
 
 const TIPS = [
-  "📌 Use PDF Chat to ask questions directly from your textbooks.",
-  "🧠 Take short quizzes after every study session for better retention.",
-  "📅 Plan your study schedule 3 days in advance for optimal results.",
-  "🤖 Ask the AI Tutor to explain concepts in simple terms.",
-  "📝 Summarize your lecture notes right after class for best results.",
+  { icon: <Pin size={15} />, text: 'Use PDF Chat to ask questions directly from your textbooks.' },
+  { icon: <Brain size={15} />, text: 'Take short quizzes after every study session for better retention.' },
+  { icon: <Calendar size={15} />, text: 'Plan your study schedule 3 days in advance for optimal results.' },
+  { icon: <Bot size={15} />, text: 'Ask the AI Tutor to explain concepts in simple terms.' },
+  { icon: <PenTool size={15} />, text: 'Summarize your lecture notes right after class for best results.' },
 ];
 
 export default function Dashboard() {
@@ -68,14 +68,14 @@ export default function Dashboard() {
         <div style={{ position: 'absolute', top: -40, right: -40, width: 200, height: 200, background: 'radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%)', borderRadius: '50%' }} />
         <div style={{ position: 'relative' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-            <span style={{ fontSize: 28 }} role="img" aria-label="wave">👋</span>
+            <Hand size={28} className="text-primary" aria-label="Welcome" />
             <div>
               <h2 style={{ fontSize: 24, fontWeight: 800 }}>Welcome back, {auth.name}!</h2>
               <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 2 }}>Ready to learn something amazing today?</p>
             </div>
           </div>
           <div style={{ marginTop: 16, padding: '10px 16px', background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)', borderRadius: 'var(--radius-sm)', fontSize: 13, color: 'var(--text-secondary)' }}>
-            💡 <strong>Daily Tip:</strong> {tip}
+            <Lightbulb size={15} style={{ verticalAlign: 'middle', marginRight: 6 }} /> <strong>Daily Tip:</strong> {tip.icon} {tip.text}
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@ export default function Dashboard() {
 
       {/* Quick Actions */}
       <div className="section-header" style={{ marginBottom: 16 }}>
-        <div><div className="section-title">⚡ Quick Actions</div><div className="section-sub">Jump right into your learning</div></div>
+        <div><div className="section-title section-title-icon"><Zap size={18} /> Quick Actions</div><div className="section-sub">Jump right into your learning</div></div>
       </div>
       <div className="grid-3" style={{ marginBottom: 28 }}>
         {QUICK_ACTIONS.map((action, i) => (
@@ -112,7 +112,7 @@ export default function Dashboard() {
       </div>
 
       {/* Recent Activity */}
-      <div className="section-header"><div><div className="section-title">🕐 Recent Activity</div><div className="section-sub">Your latest learning sessions</div></div></div>
+      <div className="section-header"><div><div className="section-title section-title-icon"><Clock size={18} /> Recent Activity</div><div className="section-sub">Your latest learning sessions</div></div></div>
 
       {!loading && recent.quizzes.length === 0 && recent.summaries.length === 0 ? (
         <div className="card">

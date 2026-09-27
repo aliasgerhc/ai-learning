@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { callGemini } from '../utils/ai';
 import { getChatHistory, addChatMessage, clearChatHistory } from '../utils/storage';
 import ReactMarkdown from 'react-markdown';
-import { Bot, User, Trash2, Send, XCircle } from 'lucide-react';
+import { Bot, User, Trash2, Send, Lightbulb } from 'lucide-react';
 
 const SYSTEM_PROMPT = `You are EduAI, a friendly and knowledgeable AI tutor for students. 
 You help students understand complex topics, answer academic questions, explain concepts clearly, 
@@ -72,7 +72,7 @@ export default function AiTutor() {
       // Save AI response to DB
       addChatMessage('ai', fullResponse);
     } catch (err) {
-      const errMsg = { role: 'ai', content: `❌ **Error:** ${err.message}`, ts: Date.now() };
+      const errMsg = { role: 'ai', content: `**Error:** ${err.message}`, ts: Date.now() };
       setMessages(prev => [...prev, errMsg]);
       setStreamingText('');
     }
@@ -101,7 +101,7 @@ export default function AiTutor() {
 
       {messages.length === 0 && !loadingHistory && (
         <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 10 }}>💡 Try asking:</div>
+          <div className="section-title-icon" style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 10 }}><Lightbulb size={15} /> Try asking:</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {SUGGESTED.map((s, i) => (
               <button key={i} className="btn btn-outline btn-sm" onClick={() => sendMessage(s)} style={{ fontSize: 12 }}>{s}</button>

@@ -69,7 +69,7 @@ export function setApiKey(key, model = '') {
 export async function callGemini(prompt, onChunk = null) {
   const apiKey = getApiKey();
   if (!apiKey) {
-    throw new Error('Please set your Gemini API key first (click the 🔑 button in the top bar).');
+    throw new Error('Please set your Gemini API key first using the API Key button in the top bar.');
   }
 
   const selectedModel = getModelName();

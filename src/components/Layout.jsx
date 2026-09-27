@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import ApiKeyModal from './ApiKeyModal';
-import { LayoutDashboard, BookOpen, Bot, FileText, BrainCircuit, PenTool, Calendar, TrendingUp, Menu, Key, LogOut } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Bot, FileText, BrainCircuit, PenTool, Calendar, TrendingUp, Menu, Key, LogOut, Moon, Sun } from 'lucide-react';
 
 const NAV_LINKS = [
   { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/' },
@@ -24,10 +24,16 @@ const MOBILE_LINKS = [
 ];
 
 export default function Layout({ children, auth, onLogout }) {
-  const location = useLocation();
-  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showKeyModal, setShowKeyModal] = useState(false);
+  const [theme, setTheme] = useState(() => localStorage.getItem('eduai_theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('eduai_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(current => current === 'dark' ? 'light' : 'dark');
 
   return (
     <div className="layout">
@@ -40,10 +46,13 @@ export default function Layout({ children, auth, onLogout }) {
           <span className="logo-text">EduAI</span>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
-          <button className="btn btn-outline" style={{ padding: '6px' }} onClick={() => setShowKeyModal(true)}>
+          <button className="icon-btn" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <button className="icon-btn" onClick={() => setShowKeyModal(true)} aria-label="Open Gemini API settings" title="Gemini API settings">
             <Key size={18} />
           </button>
-          <button className="btn btn-outline" style={{ padding: '6px' }} onClick={() => setSidebarOpen(true)}>
+          <button className="icon-btn" onClick={() => setSidebarOpen(true)} aria-label="Open navigation" title="Open navigation">
             <Menu size={18} />
           </button>
         </div>
@@ -59,9 +68,6 @@ export default function Layout({ children, auth, onLogout }) {
             <div className="logo-icon"><BookOpen size={22} color="white" /></div>
             <span className="logo-text">EduAI</span>
           </div>
-          <button className="btn btn-outline" style={{ padding: '6px 12px', fontSize: 13, gap: 6 }} onClick={() => setShowKeyModal(true)}>
-            <Key size={14} /> API Key
-          </button>
         </div>
 
         <nav className="sidebar-nav">
@@ -98,6 +104,17 @@ export default function Layout({ children, auth, onLogout }) {
 
       {/* Main Content */}
       <main className="main-content">
+        <div className="app-toolbar">
+          <span className="toolbar-label">Learning workspace</span>
+          <div className="toolbar-actions">
+            <button className="icon-btn" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+            <button className="api-key-btn" onClick={() => setShowKeyModal(true)}>
+              <Key size={15} /> <span>API Key</span>
+            </button>
+          </div>
+        </div>
         <div className="content-container">
           {children}
         </div>
