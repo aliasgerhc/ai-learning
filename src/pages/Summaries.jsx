@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getSummaries, saveSummary, deleteSummary } from '../utils/storage';
 import { callGemini } from '../utils/ai';
+import DocumentUpload from '../components/DocumentUpload';
 import ReactMarkdown from 'react-markdown';
 import { PenTool, BookOpen, Trash2, ChevronDown, ChevronUp, Sparkles, ClipboardEdit, BookMarked, AlertCircle } from 'lucide-react';
 
@@ -76,6 +77,7 @@ Use markdown formatting with headers and bullet points. Make it easy to study fr
             </div>
             <div className="input-group">
               <label className="input-label">Paste lecture notes or text</label>
+              <DocumentUpload label="Load notes from file" onTextLoaded={(text, fileName) => { setNotes(text.slice(0, 8000)); if (!title) setTitle(fileName.replace(/\.[^.]+$/, '')); }} />
               <textarea className="textarea" style={{ minHeight:280 }} placeholder="Paste your lecture notes, textbook paragraphs, or any study material here..." value={notes} onChange={e => setNotes(e.target.value)} />
               <div style={{ fontSize:11,color:'var(--text-muted)',marginTop:4 }}>{notes.length.toLocaleString()} / 8,000 chars</div>
             </div>

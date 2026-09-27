@@ -52,6 +52,9 @@ export default function Layout({ children, auth, onLogout }) {
           <button className="icon-btn" onClick={() => setShowKeyModal(true)} aria-label="Open Gemini API settings" title="Gemini API settings">
             <Key size={18} />
           </button>
+          <button className="icon-btn mobile-logout-btn" onClick={onLogout} aria-label="Log out" title="Log out">
+            <LogOut size={18} />
+          </button>
           <button className="icon-btn" onClick={() => setSidebarOpen(true)} aria-label="Open navigation" title="Open navigation">
             <Menu size={18} />
           </button>
@@ -64,7 +67,7 @@ export default function Layout({ children, auth, onLogout }) {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div className="sidebar-brand">
             <div className="logo-icon"><BookOpen size={22} color="white" /></div>
             <span className="logo-text">EduAI</span>
           </div>

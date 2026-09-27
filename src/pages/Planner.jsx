@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { callGemini } from '../utils/ai';
 import { getStudyPlans, saveStudyPlan } from '../utils/storage';
+import DocumentUpload from '../components/DocumentUpload';
 import ReactMarkdown from 'react-markdown';
 import { Calendar, BookOpen, PenTool, ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -72,6 +73,7 @@ Use markdown with clear headers, tables where appropriate. Make it motivating an
 
             <div className="input-group">
               <label className="input-label">Subjects / Topics to Study *</label>
+              <DocumentUpload label="Load topics from file" onTextLoaded={(text) => setForm(f => ({ ...f, subjects: text.slice(0, 4000) }))} />
               <textarea
                 className="textarea"
                 style={{ minHeight: 100 }}

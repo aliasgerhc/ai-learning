@@ -112,6 +112,17 @@ body {
   overflow-y: auto;
 }
 
+.sidebar-header {
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .sidebar-logo {
   padding: 24px 20px;
   border-bottom: 1px solid var(--border);
@@ -310,6 +321,11 @@ body {
   top: 0;
   z-index: 80;
 }
+
+.mobile-logout-btn { color: #f87171; }
+.document-upload { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.document-upload-name, .document-upload-error { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+.document-upload-error { color: #f87171; }
 
 /* TOP BAR */
 .topbar {

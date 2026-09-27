@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { callGemini } from '../utils/ai';
 import { getChatHistory, addChatMessage, clearChatHistory } from '../utils/storage';
+import DocumentUpload from '../components/DocumentUpload';
 import ReactMarkdown from 'react-markdown';
 import { Bot, User, Trash2, Send, Lightbulb } from 'lucide-react';
 
@@ -24,6 +25,7 @@ export default function AiTutor() {
   const [loading, setLoading] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [streamingText, setStreamingText] = useState('');
+  const [documentContext, setDocumentContext] = useState('');
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -57,7 +59,8 @@ export default function AiTutor() {
         `${m.role === 'user' ? 'Student' : 'EduAI'}: ${m.content}`
       ).join('\n\n');
 
-      const prompt = `${SYSTEM_PROMPT}\n\nConversation history:\n${context}\n\nStudent: ${userMsg}\n\nEduAI:`;
+      const document = documentContext ? `\n\nReference document:\n${documentContext.slice(0, 8000)}` : '';
+      const prompt = `${SYSTEM_PROMPT}${document}\n\nConversation history:\n${context}\n\nStudent: ${userMsg}\n\nEduAI:`;
 
       let fullResponse = '';
       await callGemini(prompt, (text) => {
@@ -98,6 +101,8 @@ export default function AiTutor() {
         </div>
         <button className="btn btn-outline btn-sm" onClick={handleClear} style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Trash2 size={16} /> Clear Chat</button>
       </div>
+
+      <DocumentUpload label="Add study document" onTextLoaded={(text) => setDocumentContext(text)} />
 
       {messages.length === 0 && !loadingHistory && (
         <div style={{ marginBottom: 20 }}>

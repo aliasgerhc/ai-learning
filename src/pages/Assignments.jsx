@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { callGemini } from '../utils/ai';
 import { getAssignments, saveAssignment } from '../utils/storage';
+import DocumentUpload from '../components/DocumentUpload';
 import ReactMarkdown from 'react-markdown';
 import { BookOpen, ClipboardList, PenTool, Target, ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -105,6 +106,7 @@ Be constructive, encouraging, and specific. Use markdown formatting.`;
 
             <div className="input-group">
               <label className="input-label">Assignment Content *</label>
+              <DocumentUpload label="Load assignment from file" onTextLoaded={(text) => setForm(f => ({ ...f, content: text.slice(0, 8000) }))} />
               <textarea
                 className="textarea"
                 style={{ minHeight: 240 }}
