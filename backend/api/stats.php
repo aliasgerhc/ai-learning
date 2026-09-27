@@ -11,8 +11,21 @@ requireMethod('GET');
 $db  = getDB();
 $uid = userId();
 
-// Get all stats in one query via the view
-$stmt = $db->prepare('SELECT * FROM dashboard_stats WHERE user_id = ?');
+// Keep this query inline because shared hosting often disallows CREATE VIEW.
+$stmt = $db->prepare('
+    SELECT
+        u.id AS user_id,
+        u.name AS user_name,
+        (SELECT COUNT(*) FROM courses WHERE user_id = u.id) AS total_courses,
+        (SELECT COUNT(*) FROM quiz_results WHERE user_id = u.id) AS total_quizzes,
+        (SELECT COUNT(*) FROM summaries WHERE user_id = u.id) AS total_summaries,
+        (SELECT COUNT(*) FROM assignments WHERE user_id = u.id) AS total_assignments,
+        (SELECT COUNT(*) FROM study_plans WHERE user_id = u.id) AS total_plans,
+        (SELECT ROUND(AVG(score), 1) FROM quiz_results WHERE user_id = u.id) AS avg_score,
+        (SELECT MAX(score) FROM quiz_results WHERE user_id = u.id) AS best_score
+    FROM users u
+    WHERE u.id = ?
+');
 $stmt->execute([$uid]);
 $stats = $stmt->fetch();
 

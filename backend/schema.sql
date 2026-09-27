@@ -2,9 +2,9 @@
 -- EduAI Learning Management System
 -- MySQL Database Schema
 -- ================================================
-DROP database eduai_lms;
-CREATE DATABASE IF NOT EXISTS eduai_lms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE eduai_lms;
+-- Select your target database in phpMyAdmin before importing this file.
+-- Database creation and deletion are intentionally omitted for shared hosting.
+
 
 -- ------------------------------------------------
 -- USERS
@@ -133,18 +133,3 @@ CREATE TABLE IF NOT EXISTS study_plans (
     INDEX idx_deadline (deadline)
 ) ENGINE=InnoDB;
 
--- ------------------------------------------------
--- DASHBOARD STATS VIEW
--- ------------------------------------------------
-CREATE OR REPLACE VIEW dashboard_stats AS
-SELECT
-    u.id        AS user_id,
-    u.name      AS user_name,
-    (SELECT COUNT(*) FROM courses       WHERE user_id = u.id) AS total_courses,
-    (SELECT COUNT(*) FROM quiz_results  WHERE user_id = u.id) AS total_quizzes,
-    (SELECT COUNT(*) FROM summaries     WHERE user_id = u.id) AS total_summaries,
-    (SELECT COUNT(*) FROM assignments   WHERE user_id = u.id) AS total_assignments,
-    (SELECT COUNT(*) FROM study_plans   WHERE user_id = u.id) AS total_plans,
-    (SELECT ROUND(AVG(score),1) FROM quiz_results WHERE user_id = u.id) AS avg_score,
-    (SELECT MAX(score) FROM quiz_results WHERE user_id = u.id) AS best_score
-FROM users u;

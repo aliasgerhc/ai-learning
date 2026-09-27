@@ -66,15 +66,13 @@ The frontend uses the PHP backend for non-guest users and falls back to local st
 http://localhost/AI-Learning-api
 ```
 
-### 1. Create the database
+### 1. Create and select the database
 
-Import [backend/schema.sql](backend/schema.sql) into MySQL:
+Create a database from your hosting control panel, select it in phpMyAdmin, and import [backend/schema.sql](backend/schema.sql). The schema intentionally does not run `DROP DATABASE`, `CREATE DATABASE`, `USE`, or `CREATE VIEW`, because shared hosting users commonly do not have those privileges.
 
 ```bash
-mysql -u root -p < backend/schema.sql
+mysql -u your_mysql_user -p your_database_name < backend/schema.sql
 ```
-
-> `schema.sql` contains `DROP database eduai_lms;` for a clean rebuild. Remove or comment out that statement if existing data must be preserved.
 
 ### 2. Configure database access
 
