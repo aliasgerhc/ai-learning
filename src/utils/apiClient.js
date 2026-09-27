@@ -4,7 +4,7 @@
 // if the backend is unreachable or user is Guest.
 // ================================================
 
-export const API_BASE = 'http://localhost/AI-Learning-api';
+export const API_BASE = 'https://ctech.great-site.net/AI-Learning-api';
 
 // ------------------------------------------------
 // Generic fetch wrapper

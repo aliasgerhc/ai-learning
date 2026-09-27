@@ -12,12 +12,13 @@ $allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
     'http://127.0.0.1:5173',
+    'https://aliasgerhc.github.io',
 ];
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 if (in_array($origin, $allowedOrigins, true)) {
     header("Access-Control-Allow-Origin: $origin");
-} else {
+} elseif ($origin === '') {
     header('Access-Control-Allow-Origin: http://localhost:5173');
 }
 
